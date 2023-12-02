@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 class Page1 extends StatefulWidget {
@@ -8,7 +10,7 @@ class Page1 extends StatefulWidget {
 }
 
 class _Page1State extends State<Page1> {
-  int number = 0;
+  int _number = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +28,13 @@ class _Page1State extends State<Page1> {
               ElevatedButton(
                 onPressed: () {
                   setState(() {
-                    number++;
+                    _number++;
                   });
                 },
                 child: const Text("Increment"),
               ),
               const SizedBox(height: 25),
-              _SubWidget(number: number),
+              _SubWidget(number: _number),
             ],
           ),
         ),
@@ -51,19 +53,43 @@ class _SubWidget extends StatefulWidget {
 }
 
 class _SubWidgetState extends State<_SubWidget> {
-  String number = "";
+  String _renderValue = "";
+  Timer? _timer;
 
   @override
   void initState() {
-    number = "Number : ${widget.number}";
+    _initialize();
 
     super.initState();
   }
 
   @override
+  void dispose() {
+    _timer?.cancel();
+
+    super.dispose();
+  }
+
+  void _initialize() {
+    _timer?.cancel();
+
+    setState(() {
+      _renderValue = "Loading...";
+    });
+
+    _timer = Timer(const Duration(seconds: 2), () {
+      _timer?.cancel();
+
+      setState(() {
+        _renderValue = "Number : ${widget.number}";
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Text(
-      number,
+      _renderValue,
       textAlign: TextAlign.center,
     );
   }
