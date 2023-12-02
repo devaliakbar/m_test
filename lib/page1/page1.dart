@@ -34,7 +34,7 @@ class _Page1State extends State<Page1> {
                 child: const Text("Increment"),
               ),
               const SizedBox(height: 25),
-              _SubWidget(number: _number),
+              SubWidget(number: _number),
             ],
           ),
         ),
@@ -43,16 +43,16 @@ class _Page1State extends State<Page1> {
   }
 }
 
-class _SubWidget extends StatefulWidget {
-  const _SubWidget({required this.number});
+class SubWidget extends StatefulWidget {
+  const SubWidget({required this.number, super.key});
 
   final int number;
 
   @override
-  State<_SubWidget> createState() => _SubWidgetState();
+  State<SubWidget> createState() => _SubWidgetState();
 }
 
-class _SubWidgetState extends State<_SubWidget> {
+class _SubWidgetState extends State<SubWidget> {
   String _renderValue = "";
   Timer? _timer;
 
